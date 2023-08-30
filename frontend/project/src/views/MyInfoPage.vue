@@ -57,25 +57,25 @@
       <div class="content">
         <form ref="myForm">
           <label for="studentID">학번 (ID)</label>
-          <input type="text" id="studentID" required disabled>
+          <input type="text" id="studentID" required disabled v-model="userInfo.studentID">
           <br>
 
           
           <label for="name">이름</label>
-          <input type="text" id="name" required disabled>
+          <input type="text" id="name" required disabled v-model="userInfo.name">
           <br>
 
     <div class="form-group">
       <label for="gender" class="radio-container">남자
-        <input type="radio" id="gender-male" name="gender" value="male">
+        <input type="radio" id="gender-male" name="gender" value="male" v-model="userInfo.gender">
       </label>
       <label for="gender" class="radio-container">여자
-        <input type="radio" id="gender-female" name="gender" value="female">
+        <input type="radio" id="gender-female" name="gender" value="female" v-model="userInfo.gender">
       </label>
     </div>
 
           <label for="residence">거주지</label>
-          <select id="residence" :disabled="!editMode">
+          <select id="residence" v-model="userInfo.residence" :disabled="!editMode">
         <option value="중구">중구</option>
         <option value="서구">서구</option>
         <option value="동구">동구</option>
@@ -97,7 +97,7 @@
           <br>
 
 <label for="age" required>출생연도</label>
-<select id="age" disabled>
+<select id="age" v-model="userInfo.birthYear" disabled>
   <option value="2004">2004년생</option>
   <option value="2003">2003년생</option>
   <option value="2002">2002년생</option>
@@ -112,7 +112,7 @@
 <br>
 
 <label for="college">단과대학</label>
-<select id="college" v-model="selectedCollege" @change="updateDepartments" :disabled="!editMode">
+<select id="college" v-model="userInfo.college" @change="updateDepartments" :disabled="!editMode">
         <option value="공과대학">공과대학</option>
         <option value="인문사회과학대학">인문사회과학대학</option>
         <option value="자연과학대학">자연과학대학</option>
@@ -127,13 +127,13 @@
 
 <!-- 소속학부 select element -->
 <label for="department">소속학부</label>
-<select id="department" :disabled="!editMode || !selectedCollege">
+<select id="department" v-model="userInfo.department" :disabled="!editMode || !selectedCollege">
   <option v-for="dept in departments" :value="dept" :key="dept">{{ dept }}</option>
 </select>
 <br>
 
           <label for="email">이메일:</label>
-          <input type="email" id="email" required pattern=".+@pknu\.ac\.kr" title="부경대학교 이메일로 입력해주세요 (예: example@pknu.ac.kr)" :disabled="!editMode">
+          <input type="email" id="email" v-model="userInfo.email" required pattern=".+@pknu\.ac\.kr" title="부경대학교 이메일로 입력해주세요 (예: example@pknu.ac.kr)" :disabled="!editMode">
           <br>
 
           <!-- 수정 버튼을 클릭했을 때 취소 버튼도 함께 보여지도록 템플릿을 수정합니다. -->
@@ -158,10 +158,12 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
 data() {
   return {
     editMode: false,
+    userInfo: [],
     originalFormData: {},
     selectedCollege: '', // 단과대 선택을 저장하는 속성 추가
     departments: [], // 선택한 단과대에 해당하는 학과들을 저장하는 배열
@@ -173,6 +175,17 @@ computed: {
     }
   },  
   methods: {
+    fetchUserInfo() {
+      console.log("fetchUserInfo method called");
+        axios.get('http://localhost:3001/api/userInfo', { params: { userID: this.user.studentID } })
+            .then(response => {
+              console.log("API Response:", response.data);  
+                this.userInfo = response.data;
+            })
+            .catch(error => {
+                console.error('Error fetching user info:', error);
+            });
+    },
     // 내 정보 페이지로 이동
     goToMyInfoPage() {
       this.$router.push("/MyInfoPage");
@@ -412,6 +425,10 @@ saveOriginalFormData() {
     }
   },
 },
+created() {
+    // 컴포넌트가 생성될 때 사용자 정보를 불러오도록 설정
+    this.fetchUserInfo();
+  },
 };
 
 

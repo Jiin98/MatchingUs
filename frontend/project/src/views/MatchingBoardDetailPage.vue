@@ -12,7 +12,7 @@
         <div class="navbar_right">
           <div class="navbar_welcome">
             <!-- 사용자 이름과 환영 메시지 -->
-            <div class="welcome">환영합니다, <strong class="name">김혜빈</strong>님! <i class="fa-regular fa-face-smile"></i></div>
+            <div class="welcome">환영합니다, <strong class="name">{{ user.name }}</strong>님! <i class="fa-regular fa-face-smile"></i></div>
           </div>
           <!-- 로그아웃 버튼 -->
           <button @click="goToLoginPage" class="btn btn-outline-success" style="color: #9370DB; text-decoration: none;">
@@ -104,6 +104,11 @@ created() {
     console.error('Error fetching comments:', error);
 });
 },
+computed: {
+    user() {
+      return JSON.parse(localStorage.getItem('user')) || {};
+    }
+  },  
   methods: {
     async addComment() {
             const postID = this.postDetail.postID;

@@ -90,7 +90,7 @@
 
           <div class="btn-container">
             <button type="button" class="apply-btn" @click="applyMatching">
-              신청!
+              신청
             </button>
             <button type="button" class="cancel-btn" @click="cancelMatching">
               취소

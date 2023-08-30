@@ -24,7 +24,7 @@ function generateRandomString(length) {
 const dbConfig = {
     host: 'localhost', // 데이터베이스 호스트 주소
     user: 'root', // 데이터베이스 사용자 이름
-    password: '0000' , // 데이터베이스 사용자 비밀번호
+    password: '1207' , // 데이터베이스 사용자 비밀번호
     database: 'matchingus_db' // 데이터베이스 이름
   };
   
@@ -207,6 +207,29 @@ app.get('/api/getComments/:postID', (req, res) => {
   });
 });
 
+// 사용자 정보 불러오기 API 엔드포인트 추가
+app.get('/api/userInfo', (req, res) => {
+  const userID = req.query.userID;
+
+  const query = `
+    SELECT studentID, name, gender, residence, birthYear, college, department, email
+    FROM users
+    WHERE studentID = ?
+  `;
+
+  connection.query(query, [userID], (err, results) => {
+    if (err) {
+      console.error('Error fetching user info:', err.message);
+      res.status(500).json({ error: 'Failed to fetch user info' });
+    } else {
+      if (results.length > 0) {
+        res.json(results[0]); // 첫 번째 결과만 반환합니다.
+      } else {
+        res.status(404).json({ error: 'User not found' });
+      }
+    }
+  });
+});
 
 const port = 3001;
 app.listen(port, () => {
