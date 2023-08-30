@@ -144,10 +144,10 @@
 
           <!-- 수정 모드일 때는 저장과 취소 버튼을 보여줍니다. -->
           <div v-if="editMode">
-            <button type="button" class="save-btn" @click="saveChanges">
+            <button type="button" class="edit-btn" @click="updateUserInformation">
               저장
             </button>
-            <button type="button" class="cancel-btn" @click="cancelChanges">
+            <button type="button" class="edit-btn" @click="cancelChanges">
               취소
             </button>
           </div>
@@ -186,6 +186,33 @@ computed: {
                 console.error('Error fetching user info:', error);
             });
     },
+
+      // Update user information
+    updateUserInformation() {
+      const updatedInfo = {
+        studentID: this.userInfo.studentID,
+        userInfo: {
+          name: this.userInfo.name,
+          gender: this.userInfo.gender,
+          residence: this.userInfo.residence,
+          birthYear: this.userInfo.birthYear,
+          college: this.userInfo.college,
+          department: this.userInfo.department,
+          email: this.userInfo.email
+        }
+      };
+
+    axios.put('http://localhost:3001/api/updateUserInfo', updatedInfo)
+      .then(response => {
+        console.log('User info updated:', response.data.message);
+        // Optionally, you can refresh the user info after updating
+        this.fetchUserInfo();
+      })
+      .catch(error => {
+        console.error('Error updating user info:', error);
+        // Handle error and show error message to the user
+      });
+  },
     // 내 정보 페이지로 이동
     goToMyInfoPage() {
       this.$router.push("/MyInfoPage");

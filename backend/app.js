@@ -231,6 +231,28 @@ app.get('/api/userInfo', (req, res) => {
   });
 });
 
+// 사용자 정보 업데이트 API 엔드포인트 추가
+app.put('/api/updateUserInfo', (req, res) => {
+  const { studentID, userInfo } = req.body;
+
+  const query = `
+    UPDATE users
+    SET name = ?, gender = ?, residence = ?, birthYear = ?, college = ?, department = ?, email = ?
+    WHERE studentID = ?
+  `;
+
+  const { name, gender, residence, birthYear, college, department, email } = userInfo;
+  connection.query(query, [name, gender, residence, birthYear, college, department, email, studentID], (err, result) => {
+    if (err) {
+      console.error('Error updating user info:', err.message);
+      res.status(500).json({ error: 'Failed to update user info' });
+    } else {
+      res.status(200).json({ message: 'User info updated successfully' });
+    }
+  });
+});
+
+
 const port = 3001;
 app.listen(port, () => {
   console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);
