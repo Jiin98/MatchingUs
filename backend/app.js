@@ -24,7 +24,7 @@ function generateRandomString(length) {
 const dbConfig = {
     host: 'localhost', // 데이터베이스 호스트 주소
     user: 'root', // 데이터베이스 사용자 이름
-    password: '1207' , // 데이터베이스 사용자 비밀번호
+    password: '0000' , // 데이터베이스 사용자 비밀번호
     database: 'matchingus_db' // 데이터베이스 이름
   };
   
