@@ -48,8 +48,8 @@
     </div>
     
     <div class="content">
-  <section id="postDetailContainer">
-      <div class="post-it" :class="{ male: postDetail.gender === 'male', female: postDetail.gender === 'female' }">
+      <section id="postDetailContainer">
+        <div class="post-it" :class="{ male: postDetail.gender === 'male', female: postDetail.gender === 'female' }">
     <h3>{{ postDetail.matchingTitle }}</h3>
     <p>인원: {{ postDetail.matchingType }}</p>
     <p>학과: {{ postDetail.department }}</p>
@@ -65,7 +65,7 @@
 </ul>
         </div>
 
-        <div class="add-comment">
+        <div class="add-comment" >
         <textarea class="textarea1" v-model="content" placeholder="댓글을 작성해주세요."></textarea>
         <button class="comment-button" @click="addComment">댓글 추가</button>
     </div>
@@ -305,9 +305,10 @@ font-family: 'jua', sans-serif;
 .content {
   display: flex;
   flex-direction: column;
+  align-items: center; /* 중앙 정렬을 위해 추가 */
+  margin-top: 150px;
   margin-right: 150px;
   margin-left: 350px;
-  margin-top: 150px;
 }
 
 /* 상세 정보 스타일 */

@@ -141,20 +141,24 @@
             수정
           </button>
 
-
           <!-- 수정 모드일 때는 저장과 취소 버튼을 보여줍니다. -->
-          <div v-if="editMode">
+          <div v-if="editMode" class="edit-buttons">
             <button type="button" class="edit-btn" @click="updateUserInformation">
               저장
             </button>
             <button type="button" class="edit-btn" @click="cancelChanges">
               취소
             </button>
+            <!-- Display the success message right below the buttons -->
+            <div v-if="saveSuccessMessage" class="success-message">
+              {{ saveSuccessMessage }}
+            </div>
           </div>
         </form>
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -162,6 +166,7 @@ import axios from 'axios';
 export default {
 data() {
   return {
+    saveSuccessMessage: '',
     editMode: false,
     userInfo: [],
     originalFormData: {},
@@ -202,17 +207,18 @@ computed: {
         }
       };
 
-    axios.put('http://localhost:3001/api/updateUserInfo', updatedInfo)
-      .then(response => {
-        console.log('User info updated:', response.data.message);
-        // Optionally, you can refresh the user info after updating
-        this.fetchUserInfo();
-      })
-      .catch(error => {
-        console.error('Error updating user info:', error);
-        // Handle error and show error message to the user
-      });
-  },
+  axios.put('http://localhost:3001/api/updateUserInfo', updatedInfo)
+    .then(response => {
+      console.log('User info updated:', response.data.message);
+      this.saveSuccessMessage = '변경 사항이 저장되었습니다.'; // Set the success message
+      this.fetchUserInfo(); // Optionally, refresh user info
+    })
+    .catch(error => {
+      console.error('Error updating user info:', error);
+      // Handle error and show error message to the user
+    });
+},
+
     // 내 정보 페이지로 이동
     goToMyInfoPage() {
       this.$router.push("/MyInfoPage");
@@ -674,6 +680,16 @@ form .form-group label {
 form .form-group input[type="radio"] {
   margin-right: 5px; /* 라디오 버튼 사이의 간격을 늘립니다 */
 }
+
+
+.success-message {
+  margin-top: 30px;
+  color: #008000; /* Green color for successful message */
+  font-weight: bold;
+  font-family: 'jua', sans-serif;
+}
+
+
 
 @font-face {
   font-family: 'jua';

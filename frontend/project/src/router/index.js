@@ -12,6 +12,7 @@ import SignUpPage from '@/views/SignUpPage.vue'; // 실제 경로에 맞게 수�
 import MatchingBoardDetailPage from '@/views/MatchingBoardDetailPage.vue'; 
 import MatchingBoardDetailPageTwo from '@/views/MatchingBoardDetailPageTwo.vue';// 실제 경로에 맞게 수정해야 합니다.
 import NoticePage from '@/views/NoticePage.vue';
+import MatchingChangePage from '@/views/MatchingChangePage.vue';
 
 const routes= [
     {
@@ -64,6 +65,11 @@ const routes= [
       {
         path: '/NoticePage',
         component:NoticePage
+      },
+
+      {
+        path: '/MatchingChangePage',
+        component:MatchingChangePage
       },
   
   ];

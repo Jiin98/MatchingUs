@@ -61,7 +61,7 @@
        </div> -->
             <!-- 매칭을 신청한 사람들이 올려놓은 글들이 포스트잇의 형태로 들어가는 내용 -->
             <section id="postItsContainer">
-              <div @click="goToMatchingApplyDetailMorePage" class="post-it female">      
+              <div @click="goToMatchingChangePage" class="post-it female">      
                 <h3> 컴퓨터공학과 남학생 3명과 친목 과팅을 구합니다!</h3>
                 <p>인원: 3명</p>
                 <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
@@ -163,6 +163,10 @@ export default {
 
     goToMainPage() {
       this.$router.push("/MainPage");
+    },
+
+    goToMatchingChangePage() {
+      this.$router.push("/MatchingChangePage");
     },
 
     // 로그인 페이지로 이동
