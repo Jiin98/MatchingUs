@@ -61,67 +61,19 @@
        </div> -->
             <!-- 매칭을 신청한 사람들이 올려놓은 글들이 포스트잇의 형태로 들어가는 내용 -->
             <section id="postItsContainer">
+              <div v-for="post in posts" :key="post.postID" @click="goToMatchingChangePage" class="post-it" :class="{ male: post.gender === 'male', female: post.gender === 'female' }">
+                <h3>{{ post.matchingTitle }}</h3>
+                <p>{{ post.matchingType }}</p>
+                <p>{{ post.department }}</p>
+                <p>{{ post.matchingContent }}</p>
+                
+            </div>
               <div @click="goToMatchingChangePage" class="post-it female">      
                 <h3> 컴퓨터공학과 남학생 3명과 친목 과팅을 구합니다!</h3>
                 <p>인원: 3명</p>
                 <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
             </div>
          
-
-            <div class="post-it female">
-                <h3>토목공학과 남학생 3명과 친목 과팅을 구합니다!</h3>
-                <p>인원: 3명</p>
-                <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
-               
-            </div>
-              <div class="post-it female">      
-                <h3>공업디자인전공 3명과 친목 과팅을 구합니다!</h3>
-                <p>인원: 3명</p>
-                <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
-               
-            </div>
-
-  <div class="post-it female">      
-                <h3>식품공학전공 남학생 2명과 친목 과팅을 구합니다!</h3>
-                <p>인원: 2명</p>
-                <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
-                
-            </div>
-
-  <div class="post-it female">      
-                <h3>ESFJ 남학생 1명과 미팅을 구합니다!</h3>
-                <p>인원: 1명</p>
-                <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
-                
-            </div>
-
-  <div class="post-it female">      
-                <h3>경제학과 남학생 5명과 친목 과팅을 구합니다!</h3>
-                <p>인원: 5명</p>
-                <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
-                
-            </div>
-
-  <div class="post-it female">      
-                <h3>미디어커뮤니케이션학부 학생 4명과 친목 과팅을 구합니다!</h3>
-                <p>인원: 4명</p>
-                <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
-               
-            </div>
-
-  <div class="post-it female">      
-                <h3>데이터정보과학부 남학생 3명과 친목 과팅을 구합니다!</h3>
-                <p>인원: 3명</p>
-                <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
-                
-            </div>
-
-  <div class="post-it female">      
-                <h3> 전기공학부 남학생 6명과 친목 과팅을 구합니다!</h3>
-                <p>인원: 6명</p>
-                <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
-            </div>
-
             </section>
            
         </div>
@@ -129,20 +81,36 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       isShowingPosts: true, // Add this data property
-      
+      posts: []
     };
   },
+  created() {
+    console.log("Attempting to fetch posts..."); // 이 로그를 추가
+    this.fetchPosts();
+},
   computed: {
     user() {
       return JSON.parse(localStorage.getItem('user')) || {};
     }
   },  
   methods: {
-    
+    fetchPosts() {
+      console.log("fetchPosts method called");
+      axios.get('http://localhost:3001/api/getUserPosts', { params: { userID: this.user.studentID } })
+            .then(response => {
+              console.log("API Response:", response.data);  
+                this.posts = response.data;
+            })
+            .catch(error => {
+                console.error('Error fetching posts:', error);
+            });
+    },
     // 내 정보 페이지로 이동
     goToMyInfoPage() {
       this.$router.push("/MyInfoPage");

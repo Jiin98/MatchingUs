@@ -16,7 +16,7 @@ function generateRandomString(length) {
     return crypto.randomBytes(length).toString('hex');
   }
   
-  // 무작위 비밀 키 생성 (예: 32바이트 길이의 문자열)
+  // 무작위 비밀 키 생성
   const secretKey = generateRandomString(32);
   console.log('Generated Secret Key:', secretKey);
 
@@ -28,10 +28,9 @@ const dbConfig = {
     database: 'matchingus_db' // 데이터베이스 이름
   };
   
-  // MySQL 데이터베이스와 연결 생성
+  // MySQL
   const connection = mysql.createConnection(dbConfig);
-  
-  // 데이터베이스 연결 오류 처리
+
   connection.connect((err) => {
     if (err) {
       console.error('Error connecting to the database:', err.message);
@@ -40,7 +39,7 @@ const dbConfig = {
     console.log('Connected to the database!');
   });
   
-// 사용자 등록 API 엔드포인트
+// 사용자 등록 API
 app.post('/api/register', (req, res) => {
     const { studentID, password, name, gender, residence, birthYear, college, department, email } = req.body;
   
@@ -57,22 +56,17 @@ app.post('/api/register', (req, res) => {
 
   // JWT를 확인하기 위한 미들웨어
 function authenticateToken(req, res, next) {
-    // 헤더에서 JWT 토큰을 추출합니다.
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
   
     if (token == null) {
-      // 토큰이 없는 경우, 인증 오류를 반환합니다.
       return res.status(401).json({ error: 'Authentication failed. Token not found.' });
     }
   
-    // 토큰을 검증합니다.
     jwt.verify(token, secretKey, (err, user) => {
       if (err) {
-        // 검증에 실패한 경우, 인증 오류를 반환합니다.
         return res.status(403).json({ error: 'Authentication failed. Invalid token.' });
       }
   
-      // 검증이 성공한 경우, 요청 객체에 사용자 정보를 추가합니다.
       req.user = user;
       next();
     });
@@ -99,10 +93,7 @@ function authenticateToken(req, res, next) {
     });
   });
 
-  // 인증이 필요한 라우트에 authenticateToken 미들웨어를 추가합니다.
 app.get('/api/protectedRoute', authenticateToken, (req, res) => {
-    // 이 라우트에 접근하기 위해서는 유효한 토큰이 필요합니다.
-    // JWT 검증을 통과한 경우, req.user 객체를 통해 사용자 정보에 접근할 수 있습니다.
     res.json({ message: 'Protected route accessed successfully!', user: req.user });
   });
 
@@ -171,7 +162,7 @@ app.get('/api/getPostDetail/:postID', (req, res) => {
       console.error('Error fetching the post detail:', err.message);
       res.status(500).json({ error: 'Failed to fetch the post detail' });
     } else {
-      res.json(results[0]); // 첫 번째 결과만 반환합니다.
+      res.json(results[0]);
     }
   });
 });
@@ -207,7 +198,7 @@ app.get('/api/getComments/:postID', (req, res) => {
   });
 });
 
-// 사용자 정보 불러오기 API 엔드포인트 추가
+// 사용자 정보 불러오기 API
 app.get('/api/userInfo', (req, res) => {
   const userID = req.query.userID;
 
@@ -223,7 +214,7 @@ app.get('/api/userInfo', (req, res) => {
       res.status(500).json({ error: 'Failed to fetch user info' });
     } else {
       if (results.length > 0) {
-        res.json(results[0]); // 첫 번째 결과만 반환합니다.
+        res.json(results[0]);
       } else {
         res.status(404).json({ error: 'User not found' });
       }
@@ -231,7 +222,7 @@ app.get('/api/userInfo', (req, res) => {
   });
 });
 
-// 사용자 정보 업데이트 API 엔드포인트 추가
+// 사용자 정보 업데이트 API
 app.put('/api/updateUserInfo', (req, res) => {
   const { studentID, userInfo } = req.body;
 
@@ -252,7 +243,7 @@ app.put('/api/updateUserInfo', (req, res) => {
   });
 });
 
-// 새로운 API 엔드포인트를 추가하여 학번 중복 여부를 확인하는 로직을 구현합니다.
+//학번 중복 API
 app.get('/api/checkDuplicateStudentID/:studentID', (req, res) => {
   const studentID = req.params.studentID;
 
@@ -266,6 +257,28 @@ app.get('/api/checkDuplicateStudentID/:studentID', (req, res) => {
       } else {
         res.status(200).json({ duplicate: false });
       }
+    }
+  });
+});
+
+// 사용자 게시글 불러오기 API
+app.get('/api/getUserPosts', (req, res) => {
+  const userID = req.query.userID;
+
+  const query = `
+  SELECT posts.*, users.gender, users.department
+    FROM posts
+    JOIN users ON posts.userID = users.id
+    WHERE studentID = ?
+  `;
+
+
+  connection.query(query, [userID], (err, results) => {
+    if (err) {
+      console.error('Error fetching user posts:', err.message);
+      res.status(500).json({ error: 'Failed to fetch user posts' });
+    } else {
+      res.json(results);
     }
   });
 });
