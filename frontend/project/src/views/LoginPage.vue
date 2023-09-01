@@ -1,7 +1,7 @@
 <template>
 
 <div class="LoginPageContainer">
-    <form class="LoginPage" @submit.prevent="loginUser">
+    <form class="LoginPage" @submit.prevent="goToMainPage">
     <div class="logo-container">
       <img src="/image/logo.png" class="logo" alt="매칭어스 로고" />
     </div>
@@ -82,7 +82,7 @@ export default {
         }
       }  catch (error) {
         console.error("로그인 중에 문제가 발생했습니다. 다시 시도해주세요.", error);
-        alert("로그인 중에 문제가 발생했습니다. 다시 시도해주세요.");
+        alert("학번 또는 비밀번호가 틀렸습니다. 다시 시도해주세요.");
       }
     },
   },

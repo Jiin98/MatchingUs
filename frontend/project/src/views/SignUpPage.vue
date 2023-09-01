@@ -20,7 +20,7 @@
       <div class="student-id-container">
        <label for="studentID">학번 (ID)</label>
       <input class="input" type="text" id="studentID" required v-model="studentID" @input="validateStudentID" style="margin-left: 18px">
-      <button class="check-button" type="button" style="margin-left: 8px" @click="checkDuplicate">중복 </button> <!--중복일 시, 409conflict 충돌이 발생하여 alert를 띄우는 게 안되는 문제를 해결할 필요가 있음. 중복 아닌 학번에 한해서는 정상 작동-->
+      <button class="check-button" type="button" style="margin-left: 8px" @click="checkDuplicate">중복 </button> <!--중복일 시, 409conflict 충돌이 발생하여 alert를 띄우는 게 안되는 문제를 해결할 필요가 있음. 중복 아닌 학번에 한해서는 정상 작동함-->
       </div>
      
       <br>
@@ -196,14 +196,14 @@ export default {
         .then(response => {
           if (response.data.duplicate) {
             // 중복인 경우 처리 로직 작성
-            alert("가입 가능한 학번이 아닙니다.");
+            alert("이미 사용 중인 학번입니다.");
           } else {
             // 중복이 아닌 경우 처리 로직 작성
             alert("가입 가능한 학번입니다.");
           }
         })
         .catch(error => {
-          console.error('Error checking duplicate studentID:', error);
+          alert('이미 사용 중인 학번입니다.', error);
         });
     },
     onAgreeCheckboxChange() {
