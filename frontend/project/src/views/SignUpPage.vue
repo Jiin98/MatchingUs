@@ -20,7 +20,7 @@
       <div class="student-id-container">
        <label for="studentID">학번 (ID)</label>
       <input class="input" type="text" id="studentID" required v-model="studentID" @input="validateStudentID" style="margin-left: 18px">
-      <button class="check-button" type="button" style="margin-left: 8px" @click="checkDuplicate">중복 </button>
+      <button class="check-button" type="button" style="margin-left: 8px" @click="checkDuplicate">중복 </button> <!--중복일 시, 409conflict 충돌이 발생하여 alert를 띄우는 게 안되는 문제를 해결할 필요가 있음. 중복 아닌 학번에 한해서는 정상 작동-->
       </div>
      
       <br>
@@ -123,6 +123,8 @@
 
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -189,6 +191,21 @@ export default {
     },
   },
   methods: {
+    checkDuplicate() {
+      axios.get(`http://localhost:3001/api/checkDuplicateStudentID/${this.studentID}`)
+        .then(response => {
+          if (response.data.duplicate) {
+            // 중복인 경우 처리 로직 작성
+            alert("가입 가능한 학번이 아닙니다.");
+          } else {
+            // 중복이 아닌 경우 처리 로직 작성
+            alert("가입 가능한 학번입니다.");
+          }
+        })
+        .catch(error => {
+          console.error('Error checking duplicate studentID:', error);
+        });
+    },
     onAgreeCheckboxChange() {
       // 동의 체크박스 상태가 변할 때마다 동의 변수를 업데이트
       this.agreed = !this.agreed;

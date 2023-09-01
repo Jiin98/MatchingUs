@@ -24,7 +24,7 @@ function generateRandomString(length) {
 const dbConfig = {
     host: 'localhost', // 데이터베이스 호스트 주소
     user: 'root', // 데이터베이스 사용자 이름
-    password: '0000' , // 데이터베이스 사용자 비밀번호
+    password: '1207' , // 데이터베이스 사용자 비밀번호
     database: 'matchingus_db' // 데이터베이스 이름
   };
   
@@ -252,6 +252,23 @@ app.put('/api/updateUserInfo', (req, res) => {
   });
 });
 
+// 새로운 API 엔드포인트를 추가하여 학번 중복 여부를 확인하는 로직을 구현합니다.
+app.get('/api/checkDuplicateStudentID/:studentID', (req, res) => {
+  const studentID = req.params.studentID;
+
+  connection.query('SELECT * FROM users WHERE studentID = ?', [studentID], (err, results) => {
+    if (err) {
+      console.error('Error checking duplicate studentID:', err.message);
+      res.status(500).json({ error: 'Failed to check duplicate studentID' });
+    } else {
+      if (results.length > 0) {
+        res.status(409).json({ duplicate: true });
+      } else {
+        res.status(200).json({ duplicate: false });
+      }
+    }
+  });
+});
 
 const port = 3001;
 app.listen(port, () => {
