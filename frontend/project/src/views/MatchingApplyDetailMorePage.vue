@@ -97,11 +97,11 @@
   },  
   methods: {
     editMatching() {
-              // Redirect to the edit page or show the edit form
+              //수정 로직 구현
           },
           deleteMatching() {
               if (confirm('정말로 삭제하시겠습니까?')) {
-                  // Call the delete API
+                  // 삭제 로직 구현
               }
           },
      

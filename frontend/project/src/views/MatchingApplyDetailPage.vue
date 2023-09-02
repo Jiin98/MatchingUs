@@ -72,12 +72,12 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      isShowingPosts: true, // Add this data property
+      isShowingPosts: true,
       posts: []
     };
   },
   created() {
-    console.log("Attempting to fetch posts..."); // 이 로그를 추가
+    console.log("Attempting to fetch posts...");
     this.fetchPosts();
 },
   computed: {

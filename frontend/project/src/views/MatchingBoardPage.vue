@@ -74,6 +74,7 @@
 
 <script>
 import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -81,7 +82,7 @@ export default {
     };
 },
 created() {
-    console.log("Attempting to fetch posts..."); // 이 로그를 추가
+    console.log("Attempting to fetch posts...");
     this.fetchPosts();
 },
 computed: {

@@ -162,6 +162,7 @@
 
 <script>
 import axios from 'axios';
+
 export default {
 data() {
   return {
@@ -212,11 +213,10 @@ computed: {
       alert("변경사항이 저장되었습니다!");
 
       this.$router.go(0);
-      this.fetchUserInfo(); // Optionally, refresh user info
+      this.fetchUserInfo();
     })
     .catch(error => {
       console.error('Error updating user info:', error);
-      // Handle error and show error message to the user
     });
 },
 

@@ -127,7 +127,7 @@ export default {
       matchingType: '',
       matchingTitle: '',
       matchingContent: '',
-      resultMessage: '', // To display the result message
+      resultMessage: '',
       resultMessageColor: '', 
       maxMatchingTitleLength: 50, // 최대 제목 길이
     maxMatchingContentLength: 500, // 최대 내용 길이
@@ -163,50 +163,48 @@ computed: {
       }
     },
     async applyMatching() {
-      // 모든 필드가 채워져 있는지 확인
-      if (
-          this.matchingType !== '' &&
-          this.matchingTitle.trim() !== '' &&
-          this.matchingContent.trim() !== ''
-      ) {
-          
-const user = JSON.parse(localStorage.getItem('user'));
-const userID = user ? user.id : null;
+  // 모든 필드가 채워져 있는지 확인
+  if (
+    this.matchingType !== '' &&
+    this.matchingTitle.trim() !== '' &&
+    this.matchingContent.trim() !== ''
+  ) {
+    const user = JSON.parse(localStorage.getItem('user'));
+    const userID = user ? user.id : null;
 
-const postData = {
-              matchingType: this.matchingType,
-              matchingTitle: this.matchingTitle,
-              matchingContent: this.matchingContent,
-              userID: userID  // You might also need to send the userID
-          };
+    const postData = {
+      matchingType: this.matchingType,
+      matchingTitle: this.matchingTitle,
+      matchingContent: this.matchingContent,
+      userID: userID
+    };
 
-          // Send the post data to the server
-          try {
-            const response = await fetch("http://localhost:3001/api/addPost", {
-              method: 'POST',
-              headers: { 
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(postData)
-          });
-          
-          if (response.ok) {
-            const data = await response.json();
-            alert(data.message);
-            this.$refs.myForm.reset();
-            this.$router.go(0);
-            } else {
-              const errorData = await response.json();
-              alert(errorData.error);
-              this.resultMessage = '매칭 신청에 실패했습니다.';
-              this.resultMessageColor = 'red';
-              this.$router.go(0);
-              }
-          } catch (error){
-            console.error("오류", error);
-          }
-        }
-    },
+    try {
+      const response = await fetch("http://localhost:3001/api/addPost", {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postData)
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message);
+        alert("매칭 신청에 성공하였습니다!");
+        this.$refs.myForm.reset();
+        this.$router.go(0);
+      } else {
+        const errorData = await response.json();
+        console.log(errorData.error);
+        alert("매칭 신청에 실패하였습니다!");
+        this.$router.go(0);
+      }
+    } catch (error) {
+      console.error("오류", error);
+    }
+  }
+},
 
     cancelMatching() {
       // 폼 필드를 지우고 결과 메시지 초기화

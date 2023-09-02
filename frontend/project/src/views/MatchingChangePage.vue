@@ -105,22 +105,21 @@
 
           </div>
         </div>
-  </template>
+</template>
   
-  <script>
-  import axios from 'axios';
+<script>
+import axios from 'axios';
 
 export default {
   data() {
     return {
-      editMode: false, // Set to false initially
+      editMode: false,
       matchingType: '',
       matchingTitle: '',
       matchingContent: '',
       resultMessage: '',
       resultMessageColor: '',
       postDetail: {},
-      // ... (other data properties)
     };
   },
   created() {
@@ -160,11 +159,10 @@ export default {
 },
 
     enableEditMode() {
-      this.editMode = true; // Activate edit mode
+      this.editMode = true;
     },
     cancelChanges() {
-      this.editMode = false; // Deactivate edit mode
-      // ... (other cancel logic)
+      this.editMode = false;
     },
       async applyMatching() {
         // 모든 필드가 채워져 있는지 확인
@@ -181,10 +179,9 @@ export default {
                 matchingType: this.matchingType,
                 matchingTitle: this.matchingTitle,
                 matchingContent: this.matchingContent,
-                userID: userID  // You might also need to send the userID
+                userID: userID
             };
   
-            // Send the post data to the server
             try {
               const response = await fetch("http://localhost:3001/api/addPost", {
                 method: 'POST',

@@ -29,7 +29,7 @@
 import axios from "axios";
 
 export default {
-  name: 'LoginForm', // Multi-word name
+  name: 'LoginForm', 
   data() {
     return {
       userId: '',
@@ -46,9 +46,6 @@ export default {
     checkInputs() {
       if (!this.userId || !this.password) {
         alert('아이디와 비밀번호를 모두 입력해주세요.');
-      } else {
-        // 서버로 아이디와 비밀번호를 보내는 로직을 추가해야 합니다.
-        // 서버에서 검증 후 로그인 처리를 해야 합니다.
       }
     },
     async loginUser() {
@@ -64,8 +61,8 @@ export default {
         });
 
         if (response.status === 200) {
-          const { message, user, token } = response.data;
-          alert(message); // 백엔드에서 온 성공 메시지를 보여줍니다.
+          const { user, token } = response.data;
+          alert("로그인에 성공하였습니다!"); 
           
           // 로그인에 성공하면 사용자 정보와 토큰을 로컬 스토리지에 저장합니다.
           localStorage.setItem('user', JSON.stringify(user));
@@ -76,13 +73,11 @@ export default {
             path: '/MainPage',
           });
         } else {
-          // 로그인이 실패한 경우, 백엔드에서 온 에러 메시지를 보여줍니다.
-          const { error } = response.data;
-          alert(error);
+          alert("학번 또는 비밀번호가 틀렸습니다. 다시 시도해주세요!");
         }
       }  catch (error) {
-        console.error("로그인 중에 문제가 발생했습니다. 다시 시도해주세요.", error);
-        alert("학번 또는 비밀번호가 틀렸습니다. 다시 시도해주세요.");
+        console.error(error);
+        alert("학번 또는 비밀번호가 틀렸습니다. 다시 시도해주세요!");
       }
     },
   },
