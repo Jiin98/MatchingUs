@@ -31,17 +31,17 @@
 
 ---
 
-### <img width="1707" alt="스크린샷 2023-09-02 오후 8 04 59" src="https://github.com/Jiin98/MatchingUs/assets/121376065/08d806d4-e319-4b72-9b55-774939f7090e">
+<img width="1707" alt="스크린샷 2023-09-02 오후 8 04 59" src="https://github.com/Jiin98/MatchingUs/assets/121376065/08d806d4-e319-4b72-9b55-774939f7090e">
 **메인 페이지**
 
 ---
 
-### <img width="1705" alt="스크린샷 2023-09-02 오후 8 05 25" src="https://github.com/Jiin98/MatchingUs/assets/121376065/de8b7a58-4889-4317-ad9b-b0cf52285852">
+<img width="1705" alt="스크린샷 2023-09-02 오후 8 05 25" src="https://github.com/Jiin98/MatchingUs/assets/121376065/de8b7a58-4889-4317-ad9b-b0cf52285852">
 **게시판 페이지**
 
 ---
 
-### <img width="1706" alt="스크린샷 2023-09-02 오후 8 08 54" src="https://github.com/Jiin98/MatchingUs/assets/121376065/9574b4e5-51ed-4a02-94dc-0043b4b969bb">
+<img width="1706" alt="스크린샷 2023-09-02 오후 8 08 54" src="https://github.com/Jiin98/MatchingUs/assets/121376065/9574b4e5-51ed-4a02-94dc-0043b4b969bb">
 **매칭 현황 페이지**
 
 ---
@@ -53,5 +53,3 @@
 ---
 
 HTML, CSS, JavaScript, Bootstrap, Vue.js, Node.js, Mysql, GitHub, Slack, Notion
-
-
