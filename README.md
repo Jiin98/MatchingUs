@@ -51,7 +51,7 @@
 
 <img width="1704" alt="스크린샷 2023-09-02 오후 8 11 22" src="https://github.com/Jiin98/MatchingUs/assets/121376065/7a93f713-e0c7-41ea-960b-a8840fbbc866">
 
-## ⚒️  **Stacks**
+## ⚒️  **Stacks**
 
 
 
