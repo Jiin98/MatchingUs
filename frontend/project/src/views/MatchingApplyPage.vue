@@ -77,17 +77,34 @@
           </div>
 
           <div class="form-group">
-            <!-- 문제점 2: 매칭 제목 아래에 textbox 추가 및 위치 조정 -->
-            <label for="matchingTitle" class="bold-purple">매칭 제목</label>
-            <input type="text" id="matchingTitle" v-model="matchingTitle" required :disabled="!editMode">
-          </div>
+    <!-- 매칭 제목 -->
+    <label for="matchingTitle" class="bold-purple">매칭 제목</label>
+    <input
+      type="text"
+      id="matchingTitle"
+      v-model="matchingTitle"
+      @input="checkMatchingTitleLength"
+      :maxlength="maxMatchingTitleLength" 
+      required
+      :disabled="!editMode"
+    />
+    <p class="text-muted">{{ matchingTitle.length }} / {{ maxMatchingTitleLength }}</p> <!-- 글자수 표시 -->
+  </div>
 
-          <div class="form-group">
-            <!-- 문제점 2: 매칭 내용 아래에 textbox 추가 및 위치 조정 -->
-            <label for="matchingContent" class="matching-label">매칭 내용</label>
-            <textarea id="matchingContent" rows="8" v-model="matchingContent" required :disabled="!editMode"></textarea>
-          </div>
-
+  <div class="form-group">
+    <!-- 매칭 내용 -->
+    <label for="matchingContent" class="matching-label">매칭 내용</label>
+    <textarea
+      id="matchingContent"
+      rows="8"
+      v-model="matchingContent"
+      @input="checkMatchingContentLength"
+      :maxlength="maxMatchingContentLength" 
+      required
+      :disabled="!editMode"
+    ></textarea>
+    <p class="text-muted">{{ matchingContent.length }} / {{ maxMatchingContentLength }}</p> <!-- 글자수 표시 -->
+  </div>
           <div class="btn-container">
             <button type="button" class="apply-btn" @click="applyMatching">
               신청
@@ -112,6 +129,8 @@ export default {
       matchingContent: '',
       resultMessage: '', // To display the result message
       resultMessageColor: '', 
+      maxMatchingTitleLength: 50, // 최대 제목 길이
+    maxMatchingContentLength: 500, // 최대 내용 길이
     };
 },
 computed: {
@@ -120,6 +139,29 @@ computed: {
     }
   },  
   methods: {
+    checkMatchingTitleLength() {
+      if (this.matchingTitle.length > this.maxMatchingTitleLength) {
+        this.matchingTitle = this.matchingTitle.slice(0, this.maxMatchingTitleLength);
+        this.$refs.myForm.querySelector("#matchingTitle").classList.add("input-error");
+        this.resultMessage = '매칭 제목은 최대 ' + this.maxMatchingTitleLength + '자까지 입력 가능합니다.';
+        this.resultMessageColor = 'red';
+      } else {
+        this.$refs.myForm.querySelector("#matchingTitle").classList.remove("input-error");
+        this.resultMessage = ''; // 글자 수가 제한 이내일 때 메시지를 지웁니다.
+      }
+    },
+
+    checkMatchingContentLength() {
+      if (this.matchingContent.length > this.maxMatchingContentLength) {
+        this.matchingContent = this.matchingContent.slice(0, this.maxMatchingContentLength);
+        this.$refs.myForm.querySelector("#matchingContent").classList.add("input-error");
+        this.resultMessage = '매칭 내용은 최대 ' + this.maxMatchingContentLength + '자까지 입력 가능합니다.';
+        this.resultMessageColor = 'red';
+      } else {
+        this.$refs.myForm.querySelector("#matchingContent").classList.remove("input-error");
+        this.resultMessage = ''; // 글자 수가 제한 이내일 때 메시지를 지웁니다.
+      }
+    },
     async applyMatching() {
       // 모든 필드가 채워져 있는지 확인
       if (
@@ -163,7 +205,7 @@ const postData = {
           } catch (error){
             console.error("오류", error);
           }
-      }
+        }
     },
 
     cancelMatching() {
@@ -203,7 +245,8 @@ const postData = {
       this.$router.push("/NoticePage");
     },
   }
-}
+};
+
 </script>
 
 <style scoped>
@@ -455,6 +498,10 @@ textarea {
   margin-top: 5px; /* 추가된 코드: 텍스트박스 위 여백 */
 }
 
+
+.input-error {
+  color: red;
+}
 
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~@fortawesome/fontawesome-free/css/all.min.css";

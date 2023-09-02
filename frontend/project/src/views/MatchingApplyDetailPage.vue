@@ -53,25 +53,17 @@
       </div>
     </nav>
 
-    <!-- 매칭 현황 -->
-    <div class="content">
-      <!-- <div class="button01">
-      <button @click="showPosts">내 게시글</button>
-      <button @click="showComments">내 댓글</button>
-       </div> -->
-            <!-- 매칭을 신청한 사람들이 올려놓은 글들이 포스트잇의 형태로 들어가는 내용 -->
-            <section id="postItsContainer">
-              <div v-for="post in posts" :key="post.postID" @click="goToMatchingChangePage(post.postID)" class="post-it" :class="{ male: post.gender === 'male', female: post.gender === 'female' }">
-                <h3>{{ post.matchingTitle }}</h3>
-                <p>{{ post.matchingType }}</p>
-                <p>{{ post.department }}</p>
-                
-            </div>
-         
-            </section>
-           
+<!-- 매칭 현황 -->
+<div class="content">
+    <section id="postItsContainer">
+        <div v-for="post in posts" :key="post.postID" @click="goToMatchingChangePage(post.postID)" class="post-it" :class="{ male: post.gender === 'male', female: post.gender === 'female' }">
+            <h3>{{ post.matchingTitle.length > 20 ? post.matchingTitle.slice(0, 20) + '...' : post.matchingTitle }}</h3>
+            <p>{{ post.matchingType }}</p>
+            <p>{{ post.department }}</p>
         </div>
-    </div>
+    </section>
+</div>
+</div>
 </template>
 
 <script>
