@@ -59,7 +59,7 @@
             
             <section id="postItsContainer">
             <div v-for="post in posts" :key="post.postID" @click="goToMatchingBoardDetailPage(post.postID)" class="post-it" :class="{ male: post.gender === 'male', female: post.gender === 'female' }">
-                <h3>{{ post.matchingTitle }}</h3>
+              <h3>{{ post.matchingTitle.length > 20 ? post.matchingTitle.slice(0, 20) + '...' : post.matchingTitle }}</h3>
                 <p>{{ post.matchingType }}</p>
                 <p>{{ post.department }}</p>
                 

@@ -64,7 +64,7 @@
   <p> 1. 왼쪽 상단 <span class="important-text">MATCHING US 로고</span>를 누르시면 처음 로그인을 했을때 나오는 <span class="important-text">메인화면</span>을 볼 수 있습니다. </p>
   <p>2. <span class="important-text">1-2인 매칭게시판은 1:1, 2:2 매칭</span>을 원하시는 분들이 사용하는 게시판이며<br> <span class="important-text">3인이상 매칭게시판은 3:3 4:4 혹은 그 이상의 인원으로 매칭</span>을 진행하고 싶은 분들이 글을 올리는 게시판입니다.</p>
   <p> 3. <span class="important-text">내 정보</span>에서는 회원가입 때 기입했던 <span class="important-text">정보의 확인 및 수정</span>을 할 수 있으며, <br>
-    <span class="important-text">매칭 신청</span>에서는 <span class="important-text">매칭을 신청</span> 할 수 있습니다. <span class="important-text">매칭 현황</span>은 <span class="important-text">본인의 게시글 및 댓글을 확인, 수정, 삭제</span>하실 수 있습니다. </p>
+    <span class="important-text">매칭 신청</span>에서는 <span class="important-text">매칭을 신청</span> 할 수 있습니다. <span class="important-text">매칭 현황</span>은 <span class="important-text">본인의 게시글을 수정</span>하실 수 있습니다. </p>
    <p>  4. 매칭을 신청하실 때에는 반드시 <span class="important-text">게시글 제목에 매칭 상세인원</span> (ex. 3:3 미팅 원합니다!) 를 기재해주시면 감사하겠습니다. <br>
      (매칭 상세인원은 필수 기입사항이며, 그 외 MBTI, 나이, 원하는 상대방의 학과 등 기타사항은 자유롭게 기재해주세요!) </p>
     <p>5. <span class="important-text">게시글에 댓글을 남기실때는</span> 꼭 인스타 아이디, 카카오톡 아이디, 연락처, 카카오톡 오픈채팅방 링크 등<br> 본인과 연락할 수 있는 <span class="important-text">연락수단을 남겨주시길</span> 바랍니다. </p>
