@@ -585,6 +585,14 @@ input[type="submit"] {
   width: 500px;
 }
 
+form label {
+  display: block;
+  margin-bottom: 5px;
+  color: #9370DB;
+  font-weight: bold;
+  font-family: 'jua', sans-serif;
+}
+
 @font-face {
   font-family: 'jua';
   src: url(../../public/fonts/font.ttf);
