@@ -107,7 +107,7 @@ app.post('/api/addPost', (req, res) => {
           console.error('Error adding the post:', err.message);
           res.status(500).json({ error: 'Failed to add the post' });
       } else {
-          res.status(201).json({ message: '매칭 신청글이 게시되었습니다!"' });
+          res.status(201).json({ message: '매칭 신청글이 게시되었습니다!' });
       }
   });
 });
