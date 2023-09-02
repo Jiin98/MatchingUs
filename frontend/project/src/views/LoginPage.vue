@@ -1,7 +1,7 @@
 <template>
 
 <div class="LoginPageContainer">
-    <form class="LoginPage" @submit.prevent="goToMainPage">
+    <form class="LoginPage" @submit.prevent="submitUser">
     <div class="logo-container">
       <img src="/image/logo.png" class="logo" alt="매칭어스 로고" />
     </div>
@@ -78,6 +78,29 @@ export default {
       }  catch (error) {
         console.error(error);
         alert("학번 또는 비밀번호가 틀렸습니다. 다시 시도해주세요!");
+      }
+    },
+    async submitUser() {
+      try {
+        const response = await axios.post("http://localhost:3001/api/login", {
+          studentID: this.userId,
+          password: this.password,
+        });
+
+        if (response.status === 200) {
+          const { user, token } = response.data;
+          
+          // 로그인에 성공하면 사용자 정보와 토큰을 로컬 스토리지에 저장합니다.
+          localStorage.setItem('user', JSON.stringify(user));
+          localStorage.setItem('token', token);
+
+          // 로그인에 성공하면 Main 페이지로 이동합니다.
+          this.$router.push({
+            path: '/MainPage',
+          });
+        }
+      }  catch (error) {
+        console.error(error);
       }
     },
   },

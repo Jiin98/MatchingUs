@@ -274,16 +274,17 @@ export default {
     if (response.ok) {
       // 회원가입이 성공적으로 이루어진 경우
       const data = await response.json();
-      alert(data.message); // 백엔드에서 전달한 메시지를 알림으로 표시합니다.
+      console.log(data.message);
+      alert("회원가입에 성공하였습니다!");
 
       this.$router.push({
         path: '/',
-        // query: { name: this.name } // Pass the user's name as a query parameter
       });
     } else {
       // 회원가입이 실패한 경우
       const errorData = await response.json();
-      alert(errorData.error); // 백엔드에서 전달한 에러 메시지를 알림으로 표시합니다.
+      console.log(errorData.error);
+      alert("회원가입에 실패하였습니다!");
     }
   } catch (error) {
     console.error("Error while registering the user:", error);
