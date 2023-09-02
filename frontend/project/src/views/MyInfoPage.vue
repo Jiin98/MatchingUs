@@ -327,8 +327,8 @@ saveOriginalFormData() {
   updateDepartments() {
     // 선택한 단과대에 해당하는 학과들을 가져오는 로직을 구현합니다.
     // 예를 들어:
-    switch (this.selectedCollege) {
-      case '공과대학':
+    switch (this.userInfo.college) {
+    case '공과대학':
         this.departments = ["전기공학부",
         "전기공학전공",
         "제어계측공학전공",
@@ -462,7 +462,16 @@ created() {
     // 컴포넌트가 생성될 때 사용자 정보를 불러오도록 설정
     this.fetchUserInfo();
   },
+  
+  watch: {
+    'userInfo.college': {
+      handler: 'updateDepartments', // userInfo.college가 변경될 때 updateDepartments 메소드를 호출합니다.
+      immediate: true, // 컴포넌트가 생성될 때 즉시 호출합니다.
+    },
+  },
+  // ...
 };
+
 
 
 </script>
