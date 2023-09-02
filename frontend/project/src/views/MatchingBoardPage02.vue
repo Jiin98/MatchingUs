@@ -62,7 +62,6 @@
               <h3>{{ post.matchingTitle }}</h3>
               <p>{{ post.matchingType }}</p>
               <p>{{ post.department }}</p>
-              <p>{{ post.matchingContent }}</p>
               
               
           </div>

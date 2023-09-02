@@ -150,7 +150,8 @@ export default {
   axios
     .put(`http://localhost:3001/api/updatePost/${postID}`, updatedData)
     .then((response) => {
-      console.log('게시물이 업데이트되었습니다.', response.data);
+      alert('게시물이 업데이트되었습니다!', response.data);
+      this.$router.go(0);
       this.editMode = false;
     })
     .catch((error) => {

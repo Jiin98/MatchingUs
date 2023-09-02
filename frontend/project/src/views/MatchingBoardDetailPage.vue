@@ -123,12 +123,14 @@ computed: {
                 });
 
                 if (response.status === 201) {
-                    alert('댓글이 성공적으로 추가되었습니다.');
+                    alert('댓글이 추가되었습니다!');
                     this.content = ''; // 댓글 내용 초기화
+                    this.$router.go(0);
                 }
             } catch (error) {
                 console.error('댓글 추가 중 오류 발생:', error);
-                alert('댓글을 추가하는데 실패했습니다.');
+                alert('댓글을 추가하는데 실패했습니다!');
+                this.$router.go(0);
             }
         },
 

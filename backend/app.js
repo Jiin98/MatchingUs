@@ -24,7 +24,7 @@ function generateRandomString(length) {
 const dbConfig = {
     host: 'localhost', // 데이터베이스 호스트 주소
     user: 'root', // 데이터베이스 사용자 이름
-    password: '0000' , // 데이터베이스 사용자 비밀번호
+    password: '1207' , // 데이터베이스 사용자 비밀번호
     database: 'matchingus_db' // 데이터베이스 이름
   };
   
@@ -87,7 +87,7 @@ function authenticateToken(req, res, next) {
           const user = results[0];
           const token = jwt.sign({ userId: user.studentID, name: user.name }, secretKey, { expiresIn: '1h' });
 
-          res.status(200).json({ message: 'Login successful', user: results[0] });
+          res.status(200).json({ message: '로그인에 성공하였습니다!', user: results[0] });
         }
       }
     });
@@ -107,7 +107,7 @@ app.post('/api/addPost', (req, res) => {
           console.error('Error adding the post:', err.message);
           res.status(500).json({ error: 'Failed to add the post' });
       } else {
-          res.status(201).json({ message: 'Post added successfully' });
+          res.status(201).json({ message: '매칭 신청글이 게시되었습니다!"' });
       }
   });
 });

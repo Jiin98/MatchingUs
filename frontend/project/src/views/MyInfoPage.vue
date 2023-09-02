@@ -151,7 +151,6 @@
             </button>
             <!-- Display the success message right below the buttons -->
             <div v-if="saveSuccessMessage" class="success-message">
-              {{ saveSuccessMessage }}
             </div>
           </div>
         </form>
@@ -210,7 +209,9 @@ computed: {
   axios.put('http://localhost:3001/api/updateUserInfo', updatedInfo)
     .then(response => {
       console.log('User info updated:', response.data.message);
-      this.saveSuccessMessage = '변경 사항이 저장되었습니다.'; // Set the success message
+      alert("변경사항이 저장되었습니다!");
+
+      this.$router.go(0);
       this.fetchUserInfo(); // Optionally, refresh user info
     })
     .catch(error => {

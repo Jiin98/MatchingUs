@@ -97,8 +97,6 @@
             </button>
           </div>
 
-          <p class="result-message" :style="{ color: resultMessageColor }">{{ resultMessage }}</p>
-
         </form>
       </div>
     </div>
@@ -153,14 +151,14 @@ const postData = {
           if (response.ok) {
             const data = await response.json();
             alert(data.message);
-            this.resultMessage = '신청되었습니다!';
-            this.resultMessageColor = 'green';
             this.$refs.myForm.reset();
+            this.$router.go(0);
             } else {
               const errorData = await response.json();
               alert(errorData.error);
               this.resultMessage = '매칭 신청에 실패했습니다.';
               this.resultMessageColor = 'red';
+              this.$router.go(0);
               }
           } catch (error){
             console.error("오류", error);

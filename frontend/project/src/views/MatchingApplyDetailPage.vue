@@ -65,13 +65,7 @@
                 <h3>{{ post.matchingTitle }}</h3>
                 <p>{{ post.matchingType }}</p>
                 <p>{{ post.department }}</p>
-                <p>{{ post.matchingContent }}</p>
                 
-            </div>
-              <div @click="goToMatchingChangePage" class="post-it female">      
-                <h3> 컴퓨터공학과 남학생 3명과 친목 과팅을 구합니다!</h3>
-                <p>인원: 3명</p>
-                <p>학과: 공과대학 시스템경영공학부 산업경영공학전공</p>
             </div>
          
             </section>
