@@ -283,6 +283,38 @@ app.get('/api/getUserPosts', (req, res) => {
   });
 });
 
+// 게시물 업데이트 API 엔드포인트
+app.put('/api/updatePost/:postID', (req, res) => {
+  const postID = req.params.postID;
+  const { matchingTitle, matchingContent, matchingType } = req.body;
+
+  // 업데이트할 데이터를 객체로 정의
+  const updatedPostData = {
+    matchingTitle,
+    matchingContent,
+    matchingType,
+  };
+
+  // 게시물 업데이트 쿼리
+  connection.query(
+    'UPDATE posts SET ? WHERE postID = ?',
+    [updatedPostData, postID],
+    (err, result) => {
+      if (err) {
+        console.error('게시물 업데이트 오류:', err.message);
+        res.status(500).json({ error: '게시물 업데이트 중 오류가 발생했습니다.' });
+      } else {
+        if (result.affectedRows === 0) {
+          res.status(404).json({ error: '게시물을 찾을 수 없습니다.' });
+        } else {
+          res.status(200).json({ message: '게시물이 업데이트되었습니다.' });
+        }
+      }
+    }
+  );
+});
+
+
 const port = 3001;
 app.listen(port, () => {
   console.log(`서버가 http://localhost:${port} 에서 실행 중입니다.`);

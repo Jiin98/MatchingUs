@@ -128,7 +128,7 @@
 <!-- 소속학부 select element -->
 <label for="department">소속학부</label>
 <select id="department" v-model="userInfo.department" :disabled="!editMode || !selectedCollege">
-  <option v-for="dept in departments" :value="dept" :key="dept">{{ dept }}</option>
+  <option v-for="department in departments" :value="department" :key="department">{{ department }}</option>
 </select>
 <br>
 

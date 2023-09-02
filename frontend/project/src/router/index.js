@@ -71,6 +71,12 @@ const routes= [
         path: '/MatchingChangePage',
         component:MatchingChangePage
       },
+      {
+        path: '/matchingchangepage/:postID',
+        name: 'MatchingChangePage',
+        component: MatchingChangePage,
+        props: true
+      },
   
   ];
 

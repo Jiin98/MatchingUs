@@ -61,7 +61,7 @@
        </div> -->
             <!-- 매칭을 신청한 사람들이 올려놓은 글들이 포스트잇의 형태로 들어가는 내용 -->
             <section id="postItsContainer">
-              <div v-for="post in posts" :key="post.postID" @click="goToMatchingChangePage" class="post-it" :class="{ male: post.gender === 'male', female: post.gender === 'female' }">
+              <div v-for="post in posts" :key="post.postID" @click="goToMatchingChangePage(post.postID)" class="post-it" :class="{ male: post.gender === 'male', female: post.gender === 'female' }">
                 <h3>{{ post.matchingTitle }}</h3>
                 <p>{{ post.matchingType }}</p>
                 <p>{{ post.department }}</p>
@@ -133,8 +133,8 @@ export default {
       this.$router.push("/MainPage");
     },
 
-    goToMatchingChangePage() {
-      this.$router.push("/MatchingChangePage");
+    goToMatchingChangePage(postID) {
+      this.$router.push({ name: 'MatchingChangePage', params: { postID: postID } });
     },
 
     // 로그인 페이지로 이동

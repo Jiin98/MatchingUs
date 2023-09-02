@@ -66,11 +66,11 @@
               <div class="radio-container">
                 <!-- 문제점 1: 1-2인 매칭, 3인 이상 텍스트 스타일 변경 -->
                 <label class="radio-label">
-                  <input type="radio" id="matching-type-1" name="matchingType" value="1-2인 매칭" v-model="matchingType">
+                  <input type="radio" id="matching-type-1" name="matchingType" value="1-2인 매칭" v-model="postDetail.matchingType">
                   <span class="bold-purple">1-2인 매칭</span>
                 </label>
                 <label class="radio-label">
-                  <input type="radio" id="matching-type-2" name="matchingType" value="3인 이상 매칭" v-model="matchingType">
+                  <input type="radio" id="matching-type-2" name="matchingType" value="3인 이상 매칭" v-model="postDetail.matchingType">
                   <span class="bold-purple">3인 이상 매칭</span>
                 </label>
               </div>
@@ -80,13 +80,13 @@
             <div class="form-group">
               <!-- 문제점 2: 매칭 제목 아래에 textbox 추가 및 위치 조정 -->
               <label for="matchingTitle" class="bold-purple">매칭 제목</label>
-              <input type="text" id="matchingTitle" v-model="matchingTitle" required :disabled="!editMode">
+              <input type="text" id="matchingTitle" v-model="postDetail.matchingTitle" required :disabled="!editMode">
             </div>
   
             <div class="form-group">
               <!-- 문제점 2: 매칭 내용 아래에 textbox 추가 및 위치 조정 -->
               <label for="matchingContent" class="matching-label">매칭 내용</label>
-              <textarea id="matchingContent" rows="8" v-model="matchingContent" required :disabled="!editMode"></textarea>
+              <textarea id="matchingContent" rows="8" v-model="postDetail.matchingContent" required :disabled="!editMode"></textarea>
             </div>
   
             <div class="btn-container">
@@ -108,6 +108,8 @@
   </template>
   
   <script>
+  import axios from 'axios';
+
 export default {
   data() {
     return {
@@ -117,20 +119,47 @@ export default {
       matchingContent: '',
       resultMessage: '',
       resultMessageColor: '',
+      postDetail: {},
       // ... (other data properties)
     };
   },
+  created() {
+    const postID = this.$route.params.postID;
+    axios.get(`http://localhost:3001/api/getPostDetail/${postID}`)
+    .then(response => {
+        this.postDetail = response.data;
+    })
+    .catch(error => {
+        console.error('Error fetching post details:', error);
+    });
+},
   computed: {
       user() {
         return JSON.parse(localStorage.getItem('user')) || {};
       }
     },  
     methods: {
+      updateUserInformation() {
+  const postID = this.$route.params.postID;
+  const updatedData = {
+    matchingType: this.postDetail.matchingType,
+    matchingTitle: this.postDetail.matchingTitle,
+    matchingContent: this.postDetail.matchingContent,
+  };
+
+  axios
+    .put(`http://localhost:3001/api/updatePost/${postID}`, updatedData)
+    .then((response) => {
+      console.log('게시물이 업데이트되었습니다.', response.data);
+      this.editMode = false;
+    })
+    .catch((error) => {
+      console.error('게시물 업데이트 오류:', error);
+    });
+},
+
     enableEditMode() {
       this.editMode = true; // Activate edit mode
-    },
-    updateUserInformation() {
-      // ... (your update method)
     },
     cancelChanges() {
       this.editMode = false; // Deactivate edit mode
